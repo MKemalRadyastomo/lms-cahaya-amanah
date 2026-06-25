@@ -6,6 +6,7 @@ use App\Http\Controllers\Siswa\MateriController;
 use App\Http\Controllers\Siswa\NilaiController;
 use App\Http\Controllers\Siswa\PengumumanController;
 use App\Http\Controllers\Siswa\TugasController;
+use App\Http\Controllers\Siswa\UjianController;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome');
@@ -37,6 +38,15 @@ Route::middleware(['auth', 'verified', 'role:siswa'])
         Route::post('tugas/{tugas}/submit', [TugasController::class, 'submit'])->name('tugas.submit');
         Route::get('tugas/{tugas}/lampiran', [TugasController::class, 'downloadLampiran'])->name('tugas.lampiran');
         Route::get('tugas/{tugas}/jawaban', [TugasController::class, 'downloadJawaban'])->name('tugas.jawaban');
+
+        // Ujian / CBT
+        Route::get('ujian', [UjianController::class, 'index'])->name('ujian.index');
+        Route::get('ujian/{ujian}', [UjianController::class, 'show'])->name('ujian.show');
+        Route::post('ujian/{ujian}/mulai', [UjianController::class, 'mulai'])->name('ujian.mulai');
+        Route::get('ujian/{ujian}/kerjakan', [UjianController::class, 'kerjakan'])->name('ujian.kerjakan');
+        Route::post('ujian/{ujian}/simpan', [UjianController::class, 'simpan'])->name('ujian.simpan');
+        Route::post('ujian/{ujian}/submit', [UjianController::class, 'submit'])->name('ujian.submit');
+        Route::get('ujian/{ujian}/hasil', [UjianController::class, 'hasil'])->name('ujian.hasil');
 
         // Jadwal
         Route::get('jadwal', [JadwalController::class, 'index'])->name('jadwal.index');

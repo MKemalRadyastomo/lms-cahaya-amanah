@@ -34,6 +34,14 @@
             'color' => 'red',
             'icon' => 'M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z',
         ])
+        <a href="{{ route('siswa.ujian.index') }}" class="block">
+            @include('siswa.partials.stat-card', [
+                'label' => 'Ujian Aktif',
+                'value' => $ujianAktif,
+                'color' => 'purple',
+                'icon' => 'M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z',
+            ])
+        </a>
         @include('siswa.partials.stat-card', [
             'label' => 'Jadwal Hari Ini',
             'value' => $jadwalHariIni->count(),

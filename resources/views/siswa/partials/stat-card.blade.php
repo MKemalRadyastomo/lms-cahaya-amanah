@@ -4,6 +4,7 @@
         'blue' => 'bg-blue-50 text-blue-600',
         'red' => 'bg-red-50 text-red-600',
         'amber' => 'bg-amber-50 text-amber-600',
+        'purple' => 'bg-purple-50 text-purple-600',
         'gray' => 'bg-gray-100 text-gray-600',
     ];
     $colorClass = $colors[$color] ?? $colors['gray'];

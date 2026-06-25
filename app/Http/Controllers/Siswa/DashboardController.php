@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Siswa;
 use App\Models\Materi;
 use App\Models\Pengumuman;
 use App\Models\Tugas;
+use App\Models\Ujian;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -33,6 +34,14 @@ class DashboardController extends BaseSiswaController
         $tugasTerlewat = Tugas::where('kelas_id', $kelasId)
             ->where('is_published', true)
             ->where('deadline', '<', now())
+            ->count();
+
+        // Ujian aktif (terbuka & belum/tengah dikerjakan) untuk siswa ini
+        $ujianAktif = Ujian::where('kelas_id', $kelasId)
+            ->where('is_published', true)
+            ->where('waktu_mulai', '<=', now())
+            ->where('waktu_selesai', '>=', now())
+            ->whereDoesntHave('ujianHasils', fn ($q) => $q->where('siswa_id', $user->id)->where('status', 'selesai'))
             ->count();
 
         // Tugas dengan deadline terdekat (belum selesai)
@@ -70,6 +79,7 @@ class DashboardController extends BaseSiswaController
             'jumlahMateri' => $jumlahMateri,
             'tugasAktif' => $tugasAktif,
             'tugasTerlewat' => $tugasTerlewat,
+            'ujianAktif' => $ujianAktif,
             'tugasTerdekat' => $tugasTerdekat,
             'jadwalHariIni' => $jadwalHariIni,
             'pengumuman' => $pengumuman,
